@@ -1,0 +1,32 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /srv/sample
+permissions:
+ - object: /srv/sample
+   mode: 755
+   type:
+    - directory
+ - object: /srv/sample
+   mode: 644
+   type:
+    - file
+ - object: /tmp
+   pattern: "myweb"
+   mode: 755
+   type:
+    - directory
+hooks:
+  ApplicationStop:
+    - location: codedeploy/stop.sh
+      timeout: 60
+      runas: root
+  BeforeInstall:
+    - location: codedeploy/before_install.sh
+      timeout: 60
+      runas: root
+  ApplicationStart:
+    - location: codedeploy/start.sh
+      timeout: 60
+      runas: root
